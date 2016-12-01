@@ -2,7 +2,74 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>dupont-v3</title>
+    <title>杜邦——让家更美好</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no,email=no">
+    <!--<meta name="viewport" content="width=750, minimum-scale=0.5, maximum-scale=2.0, user-scalable=no">-->
+    <meta name="viewport" content="width=device-width">
+    <!-- 屏幕适配，方式：设置viewport完成整体缩放 -->
+    <script>
+      (function (win) {
+        var doc = win.document;
+        var docEl = doc.documentElement;
+        var setViewport = function () {
+          //设计稿尺寸
+          var docWidth = 1334;
+          var docHeight = 750;
+          var metaEl = doc.querySelector('meta[name="viewport"]');
+          //横屏定宽，竖屏定高
+          metaEl.setAttribute('content', 'width=' + (win.innerWidth > win.innerHeight ? docWidth : docHeight) +
+            ', minimum-scale=0.5,maximum-scale=2.0, user-scalable=no');
+          var setBodyStyle = function(){
+            //竖屏，因为设计稿宽大于高，需要横屏显示，所以需要做旋转和平移处理
+            var rotate = 90;
+            var transY = -docHeight;
+            var transX = (docEl.clientHeight - docWidth) / 2;
+            //横屏
+            if (win.innerWidth > win.innerHeight) {
+              rotate = 0;
+              transY = (docEl.clientHeight - docHeight) / 2;
+              transX = 0;
+            }
+//                    alert('docEl.clientWidth = ' + docEl.clientWidth + '\n docEl.clientHeight=' + docEl.clientHeight);
+            var style = doc.createElement('style');
+            style.rel = 'stylesheet';
+            style.type = 'text/css';
+            doc.querySelectorAll('head')[0].appendChild(style);
+            var cssString = 'body {width:' + docWidth + 'px; height:' + docHeight + 'px;'+
+              '-webkit-transform: rotate(' + rotate + 'deg) translate(' + transX + 'px,' + transY + 'px); ' +
+              'transform: rotate(' + rotate + 'deg) translate(' + transX + 'px,' + transY + 'px); ' +
+              'transform-origin: 0 0; -webkit-transform-origin: 0 0;}';
+            if (style.styleSheet) {// IE
+              style.styleSheet.cssText = cssString;
+            } else {// w3c
+              var cssText = doc.createTextNode(cssString);
+              style.appendChild(cssText);
+            }
+          };
+          setBodyStyle();
+//                setTimeout(setBodyStyle,1000);
+        };
+        setViewport();
+        //检测到屏幕旋转就要立刻重新加载页面，设置新的viewport
+        //改变viewport不会刷新页面(reload)，而是能保持旋屏之前的浏览状态，这点非常好
+        win.addEventListener('resize', setViewport)
+      })(window);
+    </script>
+    <!-- /屏幕适配，方式：设置viewport完成整体缩放 -->
+    <!--<link rel="apple-touch-icon" href="favicon.png">-->
+    <!--<link rel="shortcut icon" href="favicon.png" type="image/x-icon">-->
+    <style>
+      html {
+        width: 100%;
+        height: 100%;
+        font-family: 'Microsoft YaHei', Arial, Verdana, Geneva, sans-serif;
+        font-size: 12px;
+        overflow: hidden;
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>

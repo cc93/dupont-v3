@@ -5,7 +5,8 @@ module.exports = {
     sourceType: 'module'
   },
   // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
-  extends: 'standard',
+  //注释掉extends属性即可关闭ESLint
+  // extends: 'standard',
   // required to lint *.vue files
   plugins: [
     'html'
